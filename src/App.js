@@ -36,7 +36,7 @@ return(
     <div>
       <h1>My Hacker Stories</h1>
 
-        <Search onSearch={handleSearch}/>
+        <Search onSearch={handleSearch} search={searchTerm}/>
      
       <hr/>
       
@@ -47,9 +47,10 @@ return(
 {/*------------------------------------------------------ */}
 
 const Search = props => (
+ 
     <div>
       <label htmlFor="search">Search</label>
-      <input onChange ={props.onSearch} id='search' type='text'/>
+      <input value ={props.search} onChange ={props.onSearch} id='search' type='text'/>
     </div>
   );
 
