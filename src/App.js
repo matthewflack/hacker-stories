@@ -1,5 +1,7 @@
 import React from 'react';
+{/*Completed up to pg 47.... need to commit / add that work.*/} 
 
+{/*------------------------------------------------------ */}
 
 const App= () => {
   const stories = [
@@ -20,39 +22,38 @@ const App= () => {
       objectID: 1,
       }
   ];
+  const [searchTerm, setSearchTerm] = React.useState('');
+
   const handleSearch = event =>{
-    console.log(event.target.value);
-  }
+    setSearchTerm(event.target.value);
+  };
+
+  const searchedStories = stories.filter(story=>{
+    return story.title.toLowerCase().includes(searchTerm.toLowerCase())
+  });
 
 return(
     <div>
       <h1>My Hacker Stories</h1>
-      <Search onSearch={handleSearch}/>
+
+        <Search onSearch={handleSearch}/>
      
       <hr/>
-        <List list = {stories}/>
+      
+        <List list = {searchedStories}/>
     </div>
   )};
 
+{/*------------------------------------------------------ */}
 
-const Search = props => {
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const handleChange = event => {
-    setSearchTerm(event.target.value);
-    props.onSearch(event);
-  };
-
-  return (
+const Search = props => (
     <div>
       <label htmlFor="search">Search</label>
-      <input onChange ={handleChange} id='search' type='text'/>
-      <p>
-        Searching for <strong>{searchTerm}</strong>
-      </p>
+      <input onChange ={props.onSearch} id='search' type='text'/>
     </div>
   );
 
-};
+{/*------------------------------------------------------ */}
 
 const List= props => (
   <ul>
@@ -69,6 +70,7 @@ const List= props => (
     </ul>
  );
 
+{/*------------------------------------------------------ */}
 
 export default App;
 
