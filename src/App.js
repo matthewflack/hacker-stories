@@ -1,5 +1,5 @@
 import React from 'react';
-{/*Completed up to pg 47.... need to commit / add that work.*/} 
+{/*Completed up to pg 58.... need to commit / add that work.*/} 
 
 {/*------------------------------------------------------ */}
 
@@ -33,10 +33,11 @@ const App= () => {
   });
 
 return(
+    
     <div>
       <h1>My Hacker Stories</h1>
-
-        <Search onSearch={handleSearch} search={searchTerm}/>
+        
+        <Search search={searchTerm} onSearch={handleSearch} />
      
       <hr/>
       
@@ -46,30 +47,37 @@ return(
 
 {/*------------------------------------------------------ */}
 
-const Search = props => (
- 
-    <div>
-      <label htmlFor="search">Search</label>
-      <input value ={props.search} onChange ={props.onSearch} id='search' type='text'/>
-    </div>
+const Search = ({search, onSearch}) => 
+(
+  <div>
+    <label htmlFor="search">Search</label>
+    <input 
+      id='search' 
+      type='text' 
+      value ={search}
+      onChange ={onSearch} 
+    />
+  </div>
+ );
+
+{/*------------------------------------------------------ */}
+
+const List= ({list}) => (
+  list.map(item => <Item key={item.objectID} item ={item} />)
   );
 
 {/*------------------------------------------------------ */}
 
-const List= props => (
-  <ul>
-  {props.list.map(item=>(
-      <li key={item.objectID}>
-        <span><a href={item.url}>{item.title}</a></span>
-        <span>{item.author}</span>
-        <span>{item.num_comments}</span>
-        <span>{item.points}</span>
-      </li>
-      
-    )
-    )}
-    </ul>
- );
+const Item =({item})=> (
+  <div>
+    <span>
+      <a href={item.url}>{item.title}</a>
+    </span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
+  </div>
+);
 
 {/*------------------------------------------------------ */}
 
