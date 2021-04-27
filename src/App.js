@@ -86,11 +86,19 @@ font-size: 24px;
 {/*------------------------------------------------------ */}
 
 const useSemiPersistentState = (key, initialState) => {
+  const isMounted = React.useRef(false);
+
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
   
   React.useEffect(() => {
+    if (!isMounted.current) {
+        isMounted.current = true;
+      } else {
+      console.log('A');
+      localStorage.setItem(key, value);
+      }
     localStorage.setItem(key, value);
     }, [value, key]);
     return [value, setValue];
@@ -177,6 +185,7 @@ const App= () => {
     event.preventDefault();
     };
 
+    console.log('B.App');
 return(
     
   <StyledContainer>
@@ -257,6 +266,7 @@ const InputWithLabel = ({ id, value, type = 'text',isFocused, onInputChange, chi
 
 
 const List= ({list, onRemoveItem}) => (
+  console.log('B:List') ||
   list.map(item => <Item 
     key={item.objectID} 
     item ={item} 
