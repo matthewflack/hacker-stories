@@ -9,7 +9,7 @@ import { ReactComponent as Check } from './check.svg';
 {/*------------------ Styled Components--------------------------- */}
 
 const StyledContainer = styled.div`
-height: 100vw;
+height: 100vh;
 padding: 20px;
 background: #83a4d4;
 background: linear-gradient(to left, #b6fbff, #83a4d4);
@@ -139,6 +139,13 @@ const storiesReducer = (state, action) => {
 
   const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
+  const getSumComments = stories => {
+      console.log('C');
+      return stories.data.reduce(
+        (result, value) => result + value.num_comments,
+        0
+      );
+    };
 {/*------------------------------------------------------ */}
 
 const App= () => {
@@ -149,6 +156,10 @@ const App= () => {
   const [url, setUrl] = React.useState(
     `${API_ENDPOINT}${searchTerm}`
     );
+
+    const sumComments = React.useMemo(() => getSumComments(stories), [
+      stories,
+      ]);
   
  // A
  const handleFetchStories = React.useCallback(async () => {
@@ -168,13 +179,12 @@ const App= () => {
     handleFetchStories(); // C
     }, [handleFetchStories]); // D
 
-
-  const handleRemoveStory = item => {
-    dispatchStories({
-      type: 'REMOVE_STORY',
-      payload: item,
-    });
-  };
+    const handleRemoveStory = React.useCallback(item => {
+        dispatchStories({
+          type: 'REMOVE_STORY',
+          payload: item,
+        });
+      }, []);
 
   const handleSearchInput = event =>{
     setSearchTerm(event.target.value);
@@ -184,12 +194,13 @@ const App= () => {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
     event.preventDefault();
     };
-
+    
+   
     console.log('B.App');
 return(
     
   <StyledContainer>
-    <StyledHeadlinePrimary>My Hacker Stories</StyledHeadlinePrimary>
+    <StyledHeadlinePrimary>My Hacker Stories with {sumComments} comments.</StyledHeadlinePrimary>
 
       <SearchForm 
         searchTerm={searchTerm}
@@ -265,13 +276,16 @@ const InputWithLabel = ({ id, value, type = 'text',isFocused, onInputChange, chi
 {/*------------------------------------------------------ */}
 
 
-const List= ({list, onRemoveItem}) => (
-  console.log('B:List') ||
-  list.map(item => <Item 
-    key={item.objectID} 
-    item ={item} 
-    onRemoveItem={onRemoveItem}
-    />)
+const List = React.memo(
+    ({ list, onRemoveItem }) =>
+      console.log('B:List') ||
+      list.map(item => (
+        <Item
+          key={item.objectID}
+          item={item}
+          onRemoveItem={onRemoveItem}
+        />
+      ))
   );
 
 {/*------------------------------------------------------ */}
