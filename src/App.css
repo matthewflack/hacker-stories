@@ -49,6 +49,7 @@
   font-size: 48px;
   font-weight: 300;
   letter-spacing: 2px;
+  color: red;
 }
 /****************** <Item/> ************************/
 .item {
@@ -75,7 +76,7 @@
   transition: all 0.1s ease-in;
 }
 .button:hover {
-  background: #171212;
+  background: red;
   color: #ffffff;
 }
 .button_small {
@@ -83,6 +84,10 @@
 }
 .button_large {
   padding: 10px;
+}
+.button:hover > svg > g {
+  fill: yellow;
+  stroke: #ffffff;
 }
 /****************** <SearchForm/> ************************/
 .search-form {

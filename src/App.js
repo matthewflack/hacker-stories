@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './App.css';
 import styled from 'styled-components';
+import { ReactComponent as Check } from './check.svg';
 
 {/*Completed up to pg 92.... need to commit / add that work.*/} 
 
@@ -45,7 +46,11 @@ border: 1px solid #171212;
 padding: 5px;
 cursor: pointer;
 transition: all 0.1s ease-in;
+
 &:hover {
+svg > g {
+  fill: #fff;
+}
 background: #171212;
 color: #ffffff;
 }`;
@@ -274,7 +279,7 @@ const Item = ({ item, onRemoveItem }) => (
       type="button"
       onClick={() => onRemoveItem(item)}
     >
-      Dismiss
+      <Check height="18px" width="18px" />
     </StyledButtonSmall>
   </StyledColumn>
 </StyledItem>
